@@ -1,11 +1,10 @@
 package com.gogreen.models.auth.entity;
 
-import com.gogreen.models.common.SuperBaseEntity;
+import com.gogreen.models.base.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +12,8 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@Builder
-public class GoGreenUser extends SuperBaseEntity {
+@SuperBuilder
+public class GoGreenUserEntity extends BaseEntity {
 	@Column(name = "email")
 	private String email;
 	@Column(name = "password")
@@ -26,7 +25,7 @@ public class GoGreenUser extends SuperBaseEntity {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	@ManyToMany
-	@JoinTable(name = "user_roles", joinColumns = {
+	@JoinTable(name = "user_role", joinColumns = {
 			@JoinColumn(name = "fk_user") }, inverseJoinColumns = {
 			@JoinColumn(name = "fk_role") })
 	private Set<Role> roles = new HashSet();
