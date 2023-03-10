@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		GoGreenUserEntity user = this.goGreenUserRepository.findByEmailAndDeletedFalse(email)
+		GoGreenUserEntity user = this.goGreenUserRepository.findByEmailAndDeletedIsFalse(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Wrong Email or Password"));
 
 		return new UserDetailsImpl(user.getEmail() , user.getPassword(), user.getRoles());

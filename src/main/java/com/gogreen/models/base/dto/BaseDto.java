@@ -1,19 +1,23 @@
 package com.gogreen.models.base.dto;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.sql.Timestamp;
 
 @Setter
 @Getter
 @SuperBuilder
-@NoArgsConstructor
+@MappedSuperclass
 @AllArgsConstructor
+@NoArgsConstructor
 public class BaseDto extends SuperBaseDto {
-	protected Boolean enabled;
-	protected Boolean deleted;
+	protected boolean enabled;
+	protected boolean deleted;
 
-	protected String createdAt;
+	protected Timestamp createdAt;
 
-	protected String lastUpdatedAt;
+	protected Timestamp lastUpdatedAt;
 
 }

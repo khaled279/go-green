@@ -17,19 +17,21 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(UserNotFoundException.class)
 	protected ResponseEntity<UserNotFoundException> handleUserNotFoundException(
-			EntityNotFoundException e){
+			EntityNotFoundException e) {
 		UserNotFoundException userNotFoundException = new UserNotFoundException();
 
-		return new ResponseEntity<>(userNotFoundException,userNotFoundException.getHttpStatus());
+		return new ResponseEntity<>(userNotFoundException,
+				userNotFoundException.getHttpStatus());
 
 	}
+
 	@ExceptionHandler(UserAlreadyExistsException.class)
 	protected ResponseEntity<UserAlreadyExistsException> handleUserAlreadyExistsException(
-			EntityNotFoundException e){
+			EntityNotFoundException e) {
 		UserAlreadyExistsException userAlreadyExistsException = new UserAlreadyExistsException();
-		return new ResponseEntity<>(userAlreadyExistsException,UserAlreadyExistsException.HTTP_STATUS);
+		return ResponseEntity.status(userAlreadyExistsException.getHttpStatus())
+				.body(userAlreadyExistsException);
 
 	}
-
 
 }

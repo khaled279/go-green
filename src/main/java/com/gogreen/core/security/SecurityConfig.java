@@ -60,8 +60,7 @@ public class SecurityConfig {
 
 		http.cors().and().csrf().disable().authorizeRequests(
 						(requests) -> requests.requestMatchers("/auth/**").permitAll()
-								.requestMatchers("/user/**").hasRole("ADMIN").anyRequest()
-								.authenticated()).sessionManagement()
+								.anyRequest().authenticated()).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.addFilter(

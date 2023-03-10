@@ -2,7 +2,9 @@ package com.gogreen.models.auth.entity;
 
 import com.gogreen.models.base.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -13,6 +15,9 @@ import java.util.Set;
 @Setter
 @Getter
 @SuperBuilder
+@Table(name = "go_green_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class GoGreenUserEntity extends BaseEntity {
 	@Column(name = "email")
 	private String email;

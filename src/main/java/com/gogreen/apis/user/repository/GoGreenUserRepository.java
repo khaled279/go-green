@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface GoGreenUserRepository
 		extends JpaRepository<GoGreenUserEntity, Long>, JpaSpecificationExecutor<GoGreenUserEntity> {
 
-	Optional<GoGreenUserEntity> findByEmailAndDeletedFalse(String email);
+	Optional<GoGreenUserEntity> findByEmailAndDeletedIsFalse(String email);
 
 }
