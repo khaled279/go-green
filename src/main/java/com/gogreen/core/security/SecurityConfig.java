@@ -1,5 +1,6 @@
 package com.gogreen.core.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gogreen.core.security.filters.AuthenticationFilter;
 import com.gogreen.core.security.filters.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class SecurityConfig {
 
 	private final AuthenticationConfiguration authenticationConfiguration;
 
+	private final ObjectMapper objectMapper;
+
 	@Bean
 	@Primary
 	AuthenticationManager authenticationManager(
@@ -63,8 +66,9 @@ public class SecurityConfig {
 								.anyRequest().authenticated()).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.addFilter(
-				new AuthenticationFilter(bCryptPasswordEncoder, userDetailsService));
+		http.addFilter(new AuthenticationFilter(
+				authenticationManager(authenticationConfiguration), passwordEncoder(),
+				userDetailsService, objectMapper));
 		http.addFilter(new AuthorizationFilter(
 				authenticationManager(authenticationConfiguration)));
 		return http.build();

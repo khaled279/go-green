@@ -3,6 +3,7 @@ package com.gogreen.core.aop;
 import com.gogreen.core.exception.UserAlreadyExistsException;
 import com.gogreen.core.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Aspect
 @Configuration
 @ControllerAdvice
+@Slf4j
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(UserNotFoundException.class)
@@ -37,4 +39,10 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	}
 
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	ResponseEntity handleUnhandledException(Exception e) {
+		log.error("Exception was thrown:", e);
+		return ResponseEntity.status(500).build();
+	}
 }

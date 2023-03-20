@@ -29,9 +29,7 @@ public class AuthenticationApi {
 	@PostMapping("/login")
 	ResponseEntity<AuthenticationResponseDto> authenticateUser(
 			@Valid @RequestBody AuthenticationRequestDto authenticationRequest) {
-
-		return ResponseEntity.ok(
-				this.authenticationService.authenticateUser(authenticationRequest));
+		return ResponseEntity.noContent().build();
 	}
 
 }

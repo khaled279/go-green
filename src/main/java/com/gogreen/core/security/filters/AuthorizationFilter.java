@@ -14,6 +14,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,11 +25,15 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 	public AuthorizationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
 	}
-
+	private final RequestMatcher ignoredPaths = new AntPathRequestMatcher("/auth/**");
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		if (this.ignoredPaths.matches(request)) {
+			chain.doFilter(request, response);
+			return;
+		}
 		String header = request.getHeader(Constants.HEADER_STRING);
 		if (header == null || !header.startsWith(Constants.TOKEN_PREFIX)) {
 			chain.doFilter(request, response);
@@ -52,7 +58,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 			DecodedJWT decJWT = JWT.require(Algorithm.HMAC512(Constants.SECRET.getBytes())).build()
 					.verify(token.replace(Constants.TOKEN_PREFIX, ""));
 			String user = decJWT.getSubject();
-			List<String> arrayList = decJWT.getClaim("Authorities").asList(String.class) ;
+			List<String> arrayList = decJWT.getClaim("roles").asList(String.class) ;
 
 			if (user != null) {
 				for(String authName: arrayList) {

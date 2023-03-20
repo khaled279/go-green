@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface GoGreenUserRepository
-		extends JpaRepository<GoGreenUserEntity, Long>, JpaSpecificationExecutor<GoGreenUserEntity> {
+public interface GoGreenUserRepository extends JpaRepository<GoGreenUserEntity, Long>,
+		JpaSpecificationExecutor<GoGreenUserEntity> {
 
 	Optional<GoGreenUserEntity> findByEmailAndDeletedIsFalse(String email);
 
+	Optional<GoGreenUserEntity> findByIdAndDeletedFalse(Long id);
 }

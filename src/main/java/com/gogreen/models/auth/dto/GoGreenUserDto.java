@@ -1,5 +1,6 @@
 package com.gogreen.models.auth.dto;
 
+import com.gogreen.models.auth.entity.Role;
 import com.gogreen.models.base.dto.BaseDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -8,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -17,8 +19,6 @@ import javax.validation.constraints.NotBlank;
 public class GoGreenUserDto extends BaseDto {
 	@NotBlank(message = "Email is required")
 	private String email;
-	@NotBlank(message = "Password Is required")
-	private String password;
 	@NotBlank(message = "name is required")
 	private String name;
 	private String phoneNumber;

@@ -48,33 +48,4 @@ public class AuthenticationService {
 				.build();
 	}
 
-	public AuthenticationResponseDto authenticateUser(
-			AuthenticationRequestDto authenticationRequest) {
-		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-							authenticationRequest.getEmail(),
-							authenticationRequest.getPassword()));
-			ArrayList<String> authorities = new ArrayList<>();
-			for (GrantedAuthority ga : authentication.getAuthorities()) {
-				authorities.add(ga.getAuthority());
-			}
-
-			String token = JWT.create()
-					.withSubject(authentication.getPrincipal().toString())
-					.withClaim("Authorities", authorities)
-					.withClaim("email", authenticationRequest.getEmail()).withExpiresAt(
-							new Date(
-									System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-					.sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
-			return AuthenticationResponseDto.builder().token(token)
-					.email(((GoGreenUserEntity) authentication.getPrincipal()).getEmail())
-					.build();
-
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
 }

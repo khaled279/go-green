@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
 import java.awt.*;
-import java.util.Collection;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 @Data
 public class UserDetailsImpl implements UserDetails {
@@ -47,10 +44,11 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	private Set<GrantedAuthority> reOrderAuthorities(Collection<Role> roles) {
-
-		Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
-		Set<Authority> authorities = new TreeSet<>();
-		SortedSet<GrantedAuthority> sortedAuthorities = new TreeSet<>();
+		if (roles == null) {
+			return new TreeSet<>();
+		}
+		Set<Authority> authorities = new HashSet<>();
+		Set<GrantedAuthority> sortedAuthorities = new HashSet<GrantedAuthority>();
 		for (Role goGreenRole : roles) {
 			authorities.addAll(goGreenRole.getAuthorities());
 		}
