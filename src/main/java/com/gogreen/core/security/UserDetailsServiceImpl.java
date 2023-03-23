@@ -1,10 +1,8 @@
 package com.gogreen.core.security;
 
-import com.gogreen.apis.user.boundary.util.mapper.GoGreenUserMapper;
 import com.gogreen.apis.user.repository.GoGreenUserRepository;
-import com.gogreen.models.auth.dto.GoGreenUserDto;
-import com.gogreen.models.auth.dto.UserDetailsImpl;
-import com.gogreen.models.auth.entity.GoGreenUserEntity;
+import com.gogreen.models.auth.dtos.UserDetailsImpl;
+import com.gogreen.models.auth.entities.GoGreenUserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

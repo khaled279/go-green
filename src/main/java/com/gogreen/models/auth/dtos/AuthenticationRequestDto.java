@@ -1,4 +1,4 @@
-package com.gogreen.models.auth.dto;
+package com.gogreen.models.auth.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

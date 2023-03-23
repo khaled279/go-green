@@ -1,15 +1,10 @@
-package com.gogreen.models.auth.dto;
+package com.gogreen.models.auth.dtos;
 
-import com.gogreen.models.auth.entity.Role;
 import com.gogreen.models.base.dto.BaseDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Setter
 @Getter

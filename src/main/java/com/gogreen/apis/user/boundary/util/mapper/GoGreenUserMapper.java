@@ -2,10 +2,9 @@ package com.gogreen.apis.user.boundary.util.mapper;
 
 import com.gogreen.core.constants.Constants;
 import com.gogreen.core.mappers.GenericMapper;
-import com.gogreen.models.auth.dto.GoGreenUserDto;
-import com.gogreen.models.auth.entity.GoGreenUserEntity;
+import com.gogreen.models.auth.dtos.GoGreenUserDto;
+import com.gogreen.models.auth.entities.GoGreenUserEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

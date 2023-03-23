@@ -1,4 +1,4 @@
-package com.gogreen.models.auth.entity;
+package com.gogreen.models.auth.entities;
 
 import com.gogreen.models.base.entity.SuperBaseEntity;
 import jakarta.persistence.Entity;

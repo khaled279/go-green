@@ -1,6 +1,6 @@
 package com.gogreen.apis.user.repository;
 
-import com.gogreen.models.auth.entity.GoGreenUserEntity;
+import com.gogreen.models.auth.entities.GoGreenUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

@@ -1,14 +1,11 @@
 package com.gogreen.apis.user.boundary;
 
 import com.gogreen.apis.user.controller.AuthenticationService;
-import com.gogreen.apis.user.repository.GoGreenUserRepository;
-import com.gogreen.models.auth.dto.AuthenticationRequestDto;
-import com.gogreen.models.auth.dto.AuthenticationResponseDto;
-import com.gogreen.models.auth.dto.GoGreenUserDto;
+import com.gogreen.models.auth.dtos.AuthenticationRequestDto;
+import com.gogreen.models.auth.dtos.AuthenticationResponseDto;
+import com.gogreen.models.auth.dtos.GoGreenUserDto;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

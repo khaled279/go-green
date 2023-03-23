@@ -1,14 +1,13 @@
-package com.gogreen.models.auth.dto;
+package com.gogreen.models.auth.dtos;
 
-import com.gogreen.models.auth.entity.Authority;
-import com.gogreen.models.auth.entity.Role;
+import com.gogreen.models.auth.entities.Authority;
+import com.gogreen.models.auth.entities.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import java.awt.*;
 import java.util.*;
 
 @Data

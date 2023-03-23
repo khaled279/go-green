@@ -1,7 +1,7 @@
 package com.gogreen.apis.user.boundary;
 
 import com.gogreen.apis.user.controller.UserService;
-import com.gogreen.models.auth.dto.GoGreenUserDto;
+import com.gogreen.models.auth.dtos.GoGreenUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

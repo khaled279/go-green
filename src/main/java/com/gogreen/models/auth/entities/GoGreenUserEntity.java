@@ -1,5 +1,6 @@
-package com.gogreen.models.auth.entity;
+package com.gogreen.models.auth.entities;
 
+import com.gogreen.models.auth.enums.UserTypeEnum;
 import com.gogreen.models.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,9 +30,18 @@ public class GoGreenUserEntity extends BaseEntity {
 
 	@Column(name = "phone_number")
 	private String phoneNumber;
+
+	@Column(name = "user_type")
+	@Enumerated(value = EnumType.STRING)
+	private UserTypeEnum userTypeEnum;
+
+	@Column(name = "user_details_id")
+	private Long userDetailsId;
+
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = {
 			@JoinColumn(name = "fk_user") }, inverseJoinColumns = {
 			@JoinColumn(name = "fk_role") })
 	private Set<Role> roles = new HashSet();
+
 }
