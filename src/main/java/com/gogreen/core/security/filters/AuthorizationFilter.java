@@ -8,6 +8,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,19 +22,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 	public AuthorizationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
 	}
-	private final RequestMatcher ignoredPaths = new AntPathRequestMatcher("/auth/**");
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	protected void doFilterInternal(HttpServletRequest request,
+			HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if (this.ignoredPaths.matches(request)) {
-			chain.doFilter(request, response);
-			return;
-		}
 		String header = request.getHeader(Constants.HEADER_STRING);
 		if (header == null || !header.startsWith(Constants.TOKEN_PREFIX)) {
 			chain.doFilter(request, response);
@@ -42,34 +40,44 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
 		UsernamePasswordAuthenticationToken token = getAuthentication(request);
 
-
 		if (token != null) {
 			SecurityContextHolder.getContext().setAuthentication(token);
 			chain.doFilter(request, response);
-		} else {
+		}
+		else {
 			response.sendError(401);
 		}
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
+	private UsernamePasswordAuthenticationToken getAuthentication(
+			HttpServletRequest req) {
 		String token = req.getHeader(Constants.HEADER_STRING);
 		ArrayList<GrantedAuthority> authorities = new ArrayList<>();
 		if (token != null) {
-			DecodedJWT decJWT = JWT.require(Algorithm.HMAC512(Constants.SECRET.getBytes())).build()
+			DecodedJWT decJWT = JWT.require(
+							Algorithm.HMAC512(Constants.SECRET.getBytes())).build()
 					.verify(token.replace(Constants.TOKEN_PREFIX, ""));
 			String user = decJWT.getSubject();
-			List<String> arrayList = decJWT.getClaim("roles").asList(String.class) ;
+			List<String> arrayList = decJWT.getClaim("roles").asList(String.class);
 
 			if (user != null) {
-				for(String authName: arrayList) {
+				for (String authName : arrayList) {
 					authorities.add(new SimpleGrantedAuthority(authName));
 				}
-				return new UsernamePasswordAuthenticationToken(user,token.replace(Constants.TOKEN_PREFIX, ""), authorities);
+				return new UsernamePasswordAuthenticationToken(user,
+						token.replace(Constants.TOKEN_PREFIX, ""), authorities);
 
 			}
 		}
 		return null;
 	}
 
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request)
+			throws ServletException {
+		String path = request.getRequestURI();
+		log.info(path);
 
+		return path.contains("/auth");
+	}
 }

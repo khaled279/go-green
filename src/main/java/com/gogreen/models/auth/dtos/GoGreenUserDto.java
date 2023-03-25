@@ -18,6 +18,8 @@ public class GoGreenUserDto extends BaseDto {
 	private String name;
 	private String phoneNumber;
 
+	private String password;
+
 }
 
 

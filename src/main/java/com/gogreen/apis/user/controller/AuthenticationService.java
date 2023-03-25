@@ -28,7 +28,7 @@ public class AuthenticationService {
 		}
 		GoGreenUserEntity goGreenUserEntity = goGreenUserMapper.toEntity(goGreenUserDto);
 		goGreenUserEntity.setPassword(
-				passwordEncoder.encode(goGreenUserEntity.getPassword()));
+				passwordEncoder.encode(goGreenUserDto.getPassword()));
 		this.goGreenUserRepository.saveAndFlush(goGreenUserEntity);
 
 		return AuthenticationResponseDto.builder().email(goGreenUserDto.getEmail())
