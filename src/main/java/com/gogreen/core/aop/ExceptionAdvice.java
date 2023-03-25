@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Aspect
 @Configuration
 @ControllerAdvice
@@ -20,22 +23,23 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(UserNotFoundException.class)
-	protected ResponseEntity<UserNotFoundException> handleUserNotFoundException(
-			EntityNotFoundException e) {
-		UserNotFoundException userNotFoundException = new UserNotFoundException();
-
-		return new ResponseEntity<>(userNotFoundException,
-				userNotFoundException.getHttpStatus());
+	protected ResponseEntity handleUserNotFoundException(UserNotFoundException e) {
+		Map errorMap = new HashMap();
+		errorMap.put("errorMessage", "wrong email or password");
+		errorMap.put("error code", "404");
+		return ResponseEntity.status(404).body(errorMap);
 
 	}
 
 	@ExceptionHandler(UserAlreadyExistsException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
-	protected ResponseEntity<UserAlreadyExistsException> handleUserAlreadyExistsException(
-			EntityNotFoundException e) {
-		UserAlreadyExistsException userAlreadyExistsException = new UserAlreadyExistsException();
-		return ResponseEntity.status(HttpStatus.CONFLICT)
-				.body(userAlreadyExistsException);
+	protected ResponseEntity handleUserAlreadyExistsException(
+			UserAlreadyExistsException e) {
+		Map errorMap = new HashMap();
+		errorMap.put("errorMessage", "user already exists");
+		errorMap.put("error code", "409");
+
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMap);
 
 	}
 
