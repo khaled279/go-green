@@ -1,6 +1,7 @@
 package com.gogreen.models.product.entities;
 
 import com.gogreen.models.base.entity.BaseEntity;
+import com.gogreen.models.vendor.entities.VendorEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,5 +33,5 @@ public class ProductEntity extends BaseEntity {
 	private boolean discounted = false;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "vendor_id")
-	private ProductEntity product;
+	private VendorEntity vendor;
 }
