@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.gogreen.core.security.Constants;
+import com.gogreen.models.auth.dtos.UserDetailsImpl;
+import com.gogreen.models.auth.enums.UserTypeEnum;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -57,14 +60,19 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 			DecodedJWT decJWT = JWT.require(
 							Algorithm.HMAC512(Constants.SECRET.getBytes())).build()
 					.verify(token.replace(Constants.TOKEN_PREFIX, ""));
-			String user = decJWT.getSubject();
+			String email = decJWT.getClaim("email").asString();
 			List<String> arrayList = decJWT.getClaim("roles").asList(String.class);
+			Long id = decJWT.getClaim("id").asLong();
+			UserTypeEnum userTypeEnum = decJWT.getClaim("userType")
+					.as(UserTypeEnum.class);
 
-			if (user != null) {
+			if (email != null) {
 				for (String authName : arrayList) {
 					authorities.add(new SimpleGrantedAuthority(authName));
 				}
-				return new UsernamePasswordAuthenticationToken(user,
+				UserDetailsImpl userDetails = new UserDetailsImpl(id, email, null,
+						userTypeEnum, new HashSet<>());
+				return new UsernamePasswordAuthenticationToken(userDetails,
 						token.replace(Constants.TOKEN_PREFIX, ""), authorities);
 
 			}

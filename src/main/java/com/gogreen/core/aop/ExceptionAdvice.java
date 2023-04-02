@@ -1,5 +1,6 @@
 package com.gogreen.core.aop;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.gogreen.core.exception.UserAlreadyExistsException;
 import com.gogreen.core.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,6 +30,14 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 		errorMap.put("error code", "404");
 		return ResponseEntity.status(404).body(errorMap);
 
+	}
+
+	@ExceptionHandler(JWTVerificationException.class)
+	protected ResponseEntity handleJWTVerificationException(JWTVerificationException e) {
+		Map errorMap = new HashMap();
+		errorMap.put("errorMessage", "Invalid Token");
+		errorMap.put("error code", "401");
+		return ResponseEntity.status(401).body(errorMap);
 	}
 
 	@ExceptionHandler(UserAlreadyExistsException.class)

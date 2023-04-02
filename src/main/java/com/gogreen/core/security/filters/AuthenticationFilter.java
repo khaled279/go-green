@@ -82,7 +82,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			HttpServletResponse res, FilterChain chain, Authentication auth)
 			throws IOException {
 		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-		String token = JWT.create().withSubject(userDetails.getUsername())
+		String token = JWT.create().withClaim("email", userDetails.getUsername())
+				.withClaim("id", userDetails.getId())
+				.withClaim("userType", userDetails.getUserType().name())
 				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.withClaim("roles", new ArrayList<>(userDetails.getAuthorities()).stream()
 						.map(GrantedAuthority::getAuthority).collect(Collectors.toList()))

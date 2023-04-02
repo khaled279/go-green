@@ -2,6 +2,7 @@ package com.gogreen.models.auth.dtos;
 
 import com.gogreen.models.auth.entities.Authority;
 import com.gogreen.models.auth.entities.Role;
+import com.gogreen.models.auth.enums.UserTypeEnum;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +15,11 @@ import java.util.*;
 public class UserDetailsImpl implements UserDetails {
 	private final String email;
 
+	private final Long id;
+
 	private final String password;
+
+	private final UserTypeEnum userType;
 
 	private final boolean accountNonExpired;
 
@@ -24,11 +29,13 @@ public class UserDetailsImpl implements UserDetails {
 
 	private final boolean enabled;
 
-	public UserDetailsImpl(String email, String password, boolean accountNonExpired,
-			boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled,
-			Set<Role> roles) {
+	public UserDetailsImpl(Long id, String email, String password, UserTypeEnum userType,
+			boolean accountNonExpired, boolean accountNonLocked,
+			boolean credentialsNonExpired, boolean enabled, Set<Role> roles) {
+		this.id = id;
 		this.email = email;
 		this.password = password;
+		this.userType = userType;
 		this.accountNonExpired = accountNonExpired;
 		this.accountNonLocked = accountNonLocked;
 		this.credentialsNonExpired = credentialsNonExpired;
@@ -38,8 +45,9 @@ public class UserDetailsImpl implements UserDetails {
 
 	private final Set<GrantedAuthority> authorities;
 
-	public UserDetailsImpl(String email, String password, Set<Role> roles) {
-		this(email, password, true, true, true, true, roles);
+	public UserDetailsImpl(Long id, String email, String password, UserTypeEnum userType,
+			Set<Role> roles) {
+		this(id, email, password, userType, true, true, true, true, roles);
 	}
 
 	private Set<GrantedAuthority> reOrderAuthorities(Collection<Role> roles) {

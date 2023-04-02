@@ -22,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				email).orElseThrow(
 				() -> new UsernameNotFoundException("Wrong Email or Password"));
 
-		return new UserDetailsImpl(user.getEmail(), user.getPassword(), user.getRoles());
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword(),
+				user.getUserTypeEnum(), user.getRoles());
 	}
 }

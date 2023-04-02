@@ -71,6 +71,7 @@ public class SecurityConfig {
 				userDetailsService, objectMapper));
 		http.addFilter(new AuthorizationFilter(
 				authenticationManager(authenticationConfiguration)));
+
 		return http.build();
 	}
 
