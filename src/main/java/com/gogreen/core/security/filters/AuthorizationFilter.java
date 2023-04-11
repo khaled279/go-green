@@ -57,9 +57,15 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		String token = req.getHeader(Constants.HEADER_STRING);
 		ArrayList<GrantedAuthority> authorities = new ArrayList<>();
 		if (token != null) {
-			DecodedJWT decJWT = JWT.require(
-							Algorithm.HMAC512(Constants.SECRET.getBytes())).build()
-					.verify(token.replace(Constants.TOKEN_PREFIX, ""));
+			DecodedJWT decJWT;
+			try {
+				decJWT = JWT.require(Algorithm.HMAC512(Constants.SECRET.getBytes()))
+						.build().verify(token.replace(Constants.TOKEN_PREFIX, ""));
+			}
+			catch (Exception e) {
+				return null;
+			}
+
 			String email = decJWT.getClaim("email").asString();
 			List<String> arrayList = decJWT.getClaim("roles").asList(String.class);
 			Long id = decJWT.getClaim("id").asLong();

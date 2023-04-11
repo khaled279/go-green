@@ -20,8 +20,7 @@ public class ProductApi {
 	private final ProductService productService;
 
 	@GetMapping
-	Page<ProductDto> searchProducts(
-			@RequestParam(required = false) ProductSearchDto productSearchDto,
+	Page<ProductDto> searchProducts(ProductSearchDto productSearchDto,
 			@RequestParam(required = false) Long pageSize,
 			@RequestParam(required = false, defaultValue = "0") Long pageNo,
 			@RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction) {

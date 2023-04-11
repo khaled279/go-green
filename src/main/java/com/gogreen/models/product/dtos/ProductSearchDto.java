@@ -8,12 +8,15 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductSearchDto {
 	private List<Long> productCategoryIds;
 	private String productName;
-	private BigDecimal price;
+	private BigDecimal maximumPrice;
+
+	private BigDecimal minimumPrice;
+
 }

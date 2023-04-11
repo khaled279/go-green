@@ -1,7 +1,7 @@
 package com.gogreen.models.user.entities;
 
 import com.gogreen.models.base.entity.BaseEntity;
-import com.gogreen.models.cart.entities.Cart;
+import com.gogreen.models.cart.entities.CartEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
@@ -11,8 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +22,5 @@ import java.util.Set;
 public class CommunityUserEntity extends BaseEntity {
 	private Long points;
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-	private Cart cart;
+	private CartEntity cartEntity;
 }
