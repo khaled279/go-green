@@ -7,5 +7,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CartMapper extends GenericMapper<CartEntity, CartDto> {
+	@Override
+	CartEntity toEntity(CartDto dto);
 
+	@Override
+	CartDto toDto(CartEntity entity);
 }

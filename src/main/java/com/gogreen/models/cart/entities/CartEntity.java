@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -17,8 +18,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cart")
+@SuperBuilder
 public class CartEntity extends SuperBaseEntity {
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cart")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartEntity")
 	private Set<CartItemEntity> items;
 	private BigDecimal total;
 
