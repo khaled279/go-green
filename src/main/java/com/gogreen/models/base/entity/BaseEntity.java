@@ -21,7 +21,8 @@ public class BaseEntity extends SuperBaseEntity {
 	@Builder.Default
 	protected boolean enabled = true;
 	@Column(name = "deleted", nullable = false)
-	protected boolean deleted;
+	@Builder.Default
+	protected boolean deleted = false;
 
 	@Column(name = "created_at")
 	protected Timestamp createdAt;

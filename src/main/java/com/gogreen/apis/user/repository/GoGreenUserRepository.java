@@ -15,4 +15,5 @@ public interface GoGreenUserRepository extends JpaRepository<GoGreenUserEntity, 
 
 	@Query("SELECT NEW com.gogreen.apis.user.repository.GoGreenCommunityUserWrapper(u , cu) from GoGreenUserEntity u LEFT JOIN CommunityUserEntity cu ON cu.id = u.userDetailsId WHERE u.id = :id ")
 	GoGreenCommunityUserWrapper findByIdAndDeletedFalse(@Param("id") Long id);
+
 }

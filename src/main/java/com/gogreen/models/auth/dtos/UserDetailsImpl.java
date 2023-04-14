@@ -9,7 +9,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 public class UserDetailsImpl implements UserDetails {
@@ -21,6 +24,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	private final UserTypeEnum userType;
 
+	private final Long userDetailsId;
 	private final boolean accountNonExpired;
 
 	private final boolean accountNonLocked;
@@ -30,12 +34,13 @@ public class UserDetailsImpl implements UserDetails {
 	private final boolean enabled;
 
 	public UserDetailsImpl(Long id, String email, String password, UserTypeEnum userType,
-			boolean accountNonExpired, boolean accountNonLocked,
+			Long userDetailsId, boolean accountNonExpired, boolean accountNonLocked,
 			boolean credentialsNonExpired, boolean enabled, Set<Role> roles) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
+		this.userDetailsId = userDetailsId;
 		this.accountNonExpired = accountNonExpired;
 		this.accountNonLocked = accountNonLocked;
 		this.credentialsNonExpired = credentialsNonExpired;
@@ -46,8 +51,8 @@ public class UserDetailsImpl implements UserDetails {
 	private final Set<GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String email, String password, UserTypeEnum userType,
-			Set<Role> roles) {
-		this(id, email, password, userType, true, true, true, true, roles);
+			Long userDetailsId, Set<Role> roles) {
+		this(id, email, password, userType, userDetailsId, true, true, true, true, roles);
 	}
 
 	private Set<GrantedAuthority> reOrderAuthorities(Collection<Role> roles) {

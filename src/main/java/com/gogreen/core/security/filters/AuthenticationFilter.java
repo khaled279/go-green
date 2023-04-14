@@ -84,6 +84,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
 		String token = JWT.create().withClaim("email", userDetails.getUsername())
 				.withClaim("id", userDetails.getId())
+				.withClaim("userDetailsId", userDetails.getUserDetailsId())
 				.withClaim("userType", userDetails.getUserType().name())
 				.withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.withClaim("roles", new ArrayList<>(userDetails.getAuthorities()).stream()
@@ -92,6 +93,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("email", userDetails.getUsername());
 		responseMap.put("token", token);
+		responseMap.put("userDetailsId", userDetails.getUserDetailsId());
+		responseMap.put("userType", userDetails.getUserType().name());
 		res.setStatus(HttpStatus.OK.value());
 		res.setContentType(MediaType.APPLICATION_JSON_VALUE);
 

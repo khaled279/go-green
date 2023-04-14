@@ -69,6 +69,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 			String email = decJWT.getClaim("email").asString();
 			List<String> arrayList = decJWT.getClaim("roles").asList(String.class);
 			Long id = decJWT.getClaim("id").asLong();
+			Long userDetailsId = decJWT.getClaim("userDetailsId").asLong();
 			UserTypeEnum userTypeEnum = decJWT.getClaim("userType")
 					.as(UserTypeEnum.class);
 
@@ -77,7 +78,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 					authorities.add(new SimpleGrantedAuthority(authName));
 				}
 				UserDetailsImpl userDetails = new UserDetailsImpl(id, email, null,
-						userTypeEnum, new HashSet<>());
+						userTypeEnum, userDetailsId, new HashSet<>());
 				return new UsernamePasswordAuthenticationToken(userDetails,
 						token.replace(Constants.TOKEN_PREFIX, ""), authorities);
 

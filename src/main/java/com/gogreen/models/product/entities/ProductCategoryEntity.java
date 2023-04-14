@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "product_categories")
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-public class ProductCategory extends SuperBaseEntity {
+public class ProductCategoryEntity extends SuperBaseEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 

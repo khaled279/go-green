@@ -1,13 +1,6 @@
 package com.gogreen.models.product.dtos;
 
 import com.gogreen.models.base.dto.BaseDto;
-import com.gogreen.models.product.entities.ProductCategory;
-import com.gogreen.models.vendor.dtos.VendorDto;
-import com.gogreen.models.vendor.entities.VendorEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

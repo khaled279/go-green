@@ -6,11 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -20,7 +19,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Table(name = "community_users")
 public class CommunityUserEntity extends BaseEntity {
-	private Long points;
+	@Builder.Default
+	private BigDecimal points = BigDecimal.ZERO;
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
 	private CartEntity cartEntity;
 }

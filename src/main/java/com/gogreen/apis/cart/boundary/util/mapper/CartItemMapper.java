@@ -26,9 +26,10 @@ public interface CartItemMapper extends GenericMapper<CartItemEntity, CartItemDt
 	@Override
 	List<CartItemDto> toDtoList(List<CartItemEntity> entityList);
 
-	default Set<ProductDto> productEntitySetToDtoSet(Set<ProductEntity> productEntities) {
-		return productEntities.stream()
-				.map((productEntity) -> new ProductMapperImpl().toDto(productEntity))
-				.collect(Collectors.toSet());
-	}
+//	default Set<ProductDto> productEntitySetToDtoSet(
+//			@Autowired ProductMapper productMapper, Set<ProductEntity> productEntities) {
+//		return productEntities.stream()
+//				.map(productMapper::toDto)
+//				.collect(Collectors.toSet());
+//	}
 }
