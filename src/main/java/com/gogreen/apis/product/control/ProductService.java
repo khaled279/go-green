@@ -8,6 +8,7 @@ import com.gogreen.models.product.entities.ProductEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,11 @@ public class ProductService {
 
 		List<ProductDto> productDtos = productMapper.toDtoList(
 				productEntities.getContent());
-		return new PageImpl<>(productDtos, productEntities.getPageable(),
+
+		Page productDtosPage = new PageImpl<>(productDtos, productEntities.getPageable(),
 				productEntities.getNumberOfElements());
+
+		return productDtosPage;
 
 	}
 

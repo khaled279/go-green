@@ -23,7 +23,7 @@ public class CartApi {
 		UserDetailsImpl userDetails = ((UserDetailsImpl) authentication.getPrincipal());
 		userId = userDetails.getUserType() == UserTypeEnum.ADMINISTRATION ?
 				userId :
-				userDetails.getId();
+				userDetails.getUserDetailsId();
 		return ResponseEntity.ok(
 				this.cartService.addProductToCart(productId, userId, itemCount));
 	}
@@ -34,7 +34,7 @@ public class CartApi {
 		UserDetailsImpl userDetails = ((UserDetailsImpl) authentication.getPrincipal());
 		userId = userDetails.getUserType() == UserTypeEnum.ADMINISTRATION ?
 				userId :
-				userDetails.getId();
+				userDetails.getUserDetailsId();
 		return ResponseEntity.ok(this.cartService.retrieveCart(userId));
 	}
 
@@ -44,7 +44,7 @@ public class CartApi {
 		UserDetailsImpl userDetails = ((UserDetailsImpl) authentication.getPrincipal());
 		userId = userDetails.getUserType() == UserTypeEnum.ADMINISTRATION ?
 				userId :
-				userDetails.getId();
+				userDetails.getUserDetailsId();
 		this.cartService.emptyCart(userId);
 		return ResponseEntity.noContent().build();
 	}
