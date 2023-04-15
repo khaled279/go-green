@@ -35,7 +35,7 @@ public class ProductService {
 				productEntities.getContent());
 
 		Page productDtosPage = new PageImpl<>(productDtos, productEntities.getPageable(),
-				productEntities.getNumberOfElements());
+				productEntities.getTotalElements());
 
 		return productDtosPage;
 
