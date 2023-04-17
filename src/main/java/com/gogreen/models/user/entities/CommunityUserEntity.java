@@ -2,14 +2,14 @@ package com.gogreen.models.user.entities;
 
 import com.gogreen.models.base.entity.BaseEntity;
 import com.gogreen.models.cart.entities.CartEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.gogreen.models.order.entities.OrderEntity;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,4 +23,8 @@ public class CommunityUserEntity extends BaseEntity {
 	private BigDecimal points = BigDecimal.ZERO;
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
 	private CartEntity cartEntity;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@Builder.Default
+	private Set<OrderEntity> orders = new HashSet<>();
 }

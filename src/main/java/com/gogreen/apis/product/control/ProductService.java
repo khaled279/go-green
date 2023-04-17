@@ -33,12 +33,8 @@ public class ProductService {
 
 		List<ProductDto> productDtos = productMapper.toDtoList(
 				productEntities.getContent());
-
-		Page productDtosPage = new PageImpl<>(productDtos, productEntities.getPageable(),
+		return new PageImpl<>(productDtos, productEntities.getPageable(),
 				productEntities.getTotalElements());
-
-		return productDtosPage;
-
 	}
 
 }
