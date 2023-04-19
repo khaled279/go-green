@@ -62,8 +62,11 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.cors().and().csrf().disable().authorizeRequests(
-						(requests) -> requests.requestMatchers("/auth/**").permitAll()
-								.anyRequest().authenticated()).sessionManagement()
+						(requests) -> requests.requestMatchers("/auth/**", "/v3/api-docs/**",
+										"/swagger-ui/**", "/swagger-ui.html").permitAll()
+								.requestMatchers("/admin/**")
+								.hasAuthority("administer").anyRequest().authenticated())
+				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.addFilter(new AuthenticationFilter(

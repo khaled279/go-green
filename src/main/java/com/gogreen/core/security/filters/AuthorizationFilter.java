@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationFilter extends BasicAuthenticationFilter {
@@ -79,6 +80,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 				}
 				UserDetailsImpl userDetails = new UserDetailsImpl(id, email, null,
 						userTypeEnum, userDetailsId, new HashSet<>());
+				userDetails.setAuthorities(new HashSet<>(authorities));
 				return new UsernamePasswordAuthenticationToken(userDetails,
 						token.replace(Constants.TOKEN_PREFIX, ""), authorities);
 

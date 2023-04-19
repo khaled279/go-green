@@ -4,17 +4,21 @@ import com.gogreen.models.auth.entities.Authority;
 import com.gogreen.models.auth.entities.Role;
 import com.gogreen.models.auth.enums.UserTypeEnum;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Data
+@Setter
+@Getter
 public class UserDetailsImpl implements UserDetails {
 	private final String email;
 
@@ -48,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.authorities = reOrderAuthorities(roles);
 	}
 
-	private final Set<GrantedAuthority> authorities;
+	private Set<GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String email, String password, UserTypeEnum userType,
 			Long userDetailsId, Set<Role> roles) {
