@@ -16,6 +16,7 @@ import com.gogreen.models.cart.entities.CartEntity;
 import com.gogreen.models.cart.entities.CartItemEntity;
 import com.gogreen.models.order.dtos.OrderDto;
 import com.gogreen.models.order.entities.OrderEntity;
+import com.gogreen.models.order.entities.OrderItemEntity;
 import com.gogreen.models.order.entities.OrderStatusEnum;
 import com.gogreen.models.user.entities.CommunityUserEntity;
 import jakarta.persistence.criteria.Order;
@@ -76,6 +77,9 @@ public class OrderService {
 		this.cartService.emptyCart(userDetails.getUserDetailsId());
 		orderEntity.setUser(communityUserEntity);
 		orderEntity = this.orderRepository.saveAndFlush(orderEntity);
+		for (OrderItemEntity orderItem : orderEntity.getItems()) {
+			orderItem.setOrder(orderEntity);
+		}
 		this.orderItemRepository.saveAllAndFlush(orderEntity.getItems());
 		return this.orderMapper.toDto(orderEntity);
 	}
