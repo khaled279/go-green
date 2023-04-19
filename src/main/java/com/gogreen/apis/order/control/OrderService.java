@@ -18,7 +18,12 @@ import com.gogreen.models.order.dtos.OrderDto;
 import com.gogreen.models.order.entities.OrderEntity;
 import com.gogreen.models.order.entities.OrderStatusEnum;
 import com.gogreen.models.user.entities.CommunityUserEntity;
+import jakarta.persistence.criteria.Order;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +31,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -52,8 +58,7 @@ public class OrderService {
 				userDetails.getUserDetailsId()).orElseThrow(
 				() -> new SystemException(HttpStatus.NOT_FOUND, "invalid user"));
 		CartEntity cartEntity = communityUserEntity.getCartEntity();
-		cartEntity.setTotal(recalculateCartTotal(cartEntity))
-		;
+		cartEntity.setTotal(recalculateCartTotal(cartEntity));
 		if (cartEntity.getItems().isEmpty()) {
 			throw new SystemException(HttpStatus.NO_CONTENT, "cart is empty");
 
@@ -69,9 +74,18 @@ public class OrderService {
 		}
 		communityUserRepository.saveAndFlush(communityUserEntity);
 		this.cartService.emptyCart(userDetails.getUserDetailsId());
+		orderEntity.setUser(communityUserEntity);
 		orderEntity = this.orderRepository.saveAndFlush(orderEntity);
 		this.orderItemRepository.saveAllAndFlush(orderEntity.getItems());
 		return this.orderMapper.toDto(orderEntity);
+	}
+
+	public Page<OrderDto> listOrders(UserDetailsImpl userDetails, Pageable pageable) {
+		Page<OrderEntity> ordersPage = this.orderRepository.findByUserId(
+				userDetails.getUserDetailsId(), pageable);
+		List<OrderDto> orderDtos = this.orderMapper.toDtoList(ordersPage.getContent());
+		return new PageImpl<>(orderDtos, ordersPage.getPageable(),
+				ordersPage.getTotalElements());
 	}
 
 	private BigDecimal recalculateCartTotal(CartEntity userCart) {
