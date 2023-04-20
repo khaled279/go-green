@@ -1,6 +1,6 @@
-package com.gogreen.apis.admin.vendor.boundary;
+package com.gogreen.apis.admin.vendor.main.boundary;
 
-import com.gogreen.apis.admin.vendor.control.VendorService;
+import com.gogreen.apis.admin.vendor.main.control.VendorService;
 import com.gogreen.models.auth.dtos.UserDetailsImpl;
 import com.gogreen.models.vendor.dtos.VendorDto;
 import lombok.RequiredArgsConstructor;

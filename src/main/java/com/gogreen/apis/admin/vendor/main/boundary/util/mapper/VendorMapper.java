@@ -1,4 +1,4 @@
-package com.gogreen.apis.admin.vendor.boundary.util.mapper;
+package com.gogreen.apis.admin.vendor.main.boundary.util.mapper;
 
 import com.gogreen.core.constants.Constants;
 import com.gogreen.core.mappers.GenericMapper;

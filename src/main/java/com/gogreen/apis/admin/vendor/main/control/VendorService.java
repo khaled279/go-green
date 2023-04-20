@@ -1,8 +1,7 @@
-package com.gogreen.apis.admin.vendor.control;
+package com.gogreen.apis.admin.vendor.main.control;
 
-import com.gogreen.apis.admin.vendor.boundary.VendorApi;
-import com.gogreen.apis.admin.vendor.boundary.util.mapper.VendorMapper;
-import com.gogreen.apis.admin.vendor.repository.VendorRepository;
+import com.gogreen.apis.admin.vendor.main.boundary.util.mapper.VendorMapper;
+import com.gogreen.apis.admin.vendor.main.repository.VendorRepository;
 import com.gogreen.core.exception.SystemException;
 import com.gogreen.models.vendor.dtos.VendorDto;
 import com.gogreen.models.vendor.entities.VendorEntity;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor

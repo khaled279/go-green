@@ -1,4 +1,4 @@
-package com.gogreen.apis.admin.vendor.repository;
+package com.gogreen.apis.admin.vendor.main.repository;
 
 import com.gogreen.models.vendor.dtos.VendorDto;
 import com.gogreen.models.vendor.entities.VendorEntity;
