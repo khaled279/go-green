@@ -37,7 +37,14 @@ public class ProductAdministrationService {
 
 	private final ProductCategoryRepository productCategoryRepository;
 
-	public Page<ProductDto> listProducts(Long vendorId, Pageable pageable) {
+	public Page<ProductDto> listProducts(Long vendorId, Pageable pageable,
+			UserDetailsImpl userDetails) {
+		if (userDetails.getUserType().equals(UserTypeEnum.VENDOR)) {
+			VendorUserEntity vendorUserEntity = this.vendorUserRepository.findByIdAndDeletedFalseAndEnabledTrue(
+					userDetails.getUserDetailsId()).orElseThrow(
+					() -> new SystemException(HttpStatus.FORBIDDEN, "user not found"));
+			vendorId = vendorUserEntity.getVendorId();
+		}
 		ProductSearchDto productSearchDto = new ProductSearchDto();
 		productSearchDto.setVendorId(vendorId);
 		return this.productService.searchProducts(productSearchDto, pageable);

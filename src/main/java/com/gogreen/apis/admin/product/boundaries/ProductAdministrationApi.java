@@ -26,10 +26,11 @@ public class ProductAdministrationApi {
 	Page<ProductDto> listProducts(@RequestParam(required = false) Long vendorId,
 			@RequestParam(required = false) Long pageSize,
 			@RequestParam(required = false, defaultValue = "0") Long pageNo,
-			@RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction) {
+			@RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction,
+			@AuthenticationPrincipal UserDetailsImpl userDetails) {
 		return this.productAdministrationService.listProducts(vendorId, pageSize == null ?
 				Pageable.unpaged() :
-				PageRequest.of(pageNo.intValue(), pageSize.intValue()));
+				PageRequest.of(pageNo.intValue(), pageSize.intValue()), userDetails);
 	}
 
 	@PostMapping("/product")
