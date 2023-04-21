@@ -7,9 +7,10 @@ import com.gogreen.models.user.dtos.CommunityUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +22,12 @@ public class CommunityUserApi {
 	public ResponseEntity<CommunityUserDto> retrieveUser(Authentication authentication) {
 		return ResponseEntity.ok(this.userService.retrieveUser(
 				((UserDetailsImpl) authentication.getPrincipal()).getId()));
+	}
+
+	@PutMapping("/add-points")
+	public ResponseEntity<Void> addPoints(@RequestParam BigDecimal points,
+			@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		this.userService.addPoints(points, userDetails);
+		return ResponseEntity.ok().build();
 	}
 }
