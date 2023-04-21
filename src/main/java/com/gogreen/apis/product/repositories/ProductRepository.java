@@ -20,5 +20,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>,
 			@Param("minimumPrice") BigDecimal minimumPrice,
 			@Param("productIds") List<Long> productIds, Long vendorId, Pageable pageable);
 
-	Optional<ProductEntity> findByIdAndDeletedFalse(Long id);
+	Optional<ProductEntity> findByIdAndDeletedFalse(@Param("id") Long id);
 }

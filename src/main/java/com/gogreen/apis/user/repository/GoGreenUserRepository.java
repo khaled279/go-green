@@ -22,7 +22,7 @@ public interface GoGreenUserRepository extends JpaRepository<GoGreenUserEntity, 
 	GoGreenCommunityUserWrapper findByIdAndDeletedFalse(@Param("id") Long id);
 
 	@Query("SELECT NEW com.gogreen.apis.user.repository.GoGreenCommunityUserWrapper(u , cu)  from GoGreenUserEntity u  JOIN   CommunityUserEntity cu ON cu.id = u.userDetailsId WHERE u.userTypeEnum= 'COMMUNITY' AND  ( :email = null OR u.email LIKE :email) AND ( :name = null OR u.name LIKE :name)   AND (:points = null OR :points > cu.points )   AND (:id =null OR :id = u.id )")
-	Page<GoGreenCommunityUserWrapper> listAll(Long id, BigDecimal points, String email,
+	Page<GoGreenCommunityUserWrapper> listAll(@Param("id") Long id,@Param("points") BigDecimal points,@Param("email") String email,
 			String name, Pageable pageable);
 
 	@Query("SELECT NEW com.gogreen.models.user.entities.VendorUserWrapper(u , vu) from GoGreenUserEntity u  JOIN VendorUserEntity vu ON vu.id = u.userDetailsId WHERE vu.vendorId = :id  AND u.userTypeEnum= 'VENDOR'")
