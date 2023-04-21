@@ -5,6 +5,7 @@ import com.gogreen.core.mappers.GenericMapper;
 import com.gogreen.models.auth.dtos.GoGreenUserDto;
 import com.gogreen.models.auth.entities.GoGreenUserEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -18,6 +19,7 @@ public interface GoGreenUserMapper
 	GoGreenUserEntity toEntity(GoGreenUserDto dto);
 
 	@Override
+	@Mapping(target = "password", source = "password", ignore = true)
 	GoGreenUserDto toDto(GoGreenUserEntity entity);
 
 	default Timestamp map(final String value) throws ParseException {

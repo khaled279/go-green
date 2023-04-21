@@ -5,4 +5,5 @@ import com.gogreen.models.user.dtos.VendorUserDto;
 import com.gogreen.models.user.entities.VendorUserEntity;
 
 public interface VendorUserMapper extends GenericMapper<VendorUserEntity, VendorUserDto> {
+
 }

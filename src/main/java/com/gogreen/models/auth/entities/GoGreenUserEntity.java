@@ -1,5 +1,6 @@
 package com.gogreen.models.auth.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gogreen.models.auth.enums.UserTypeEnum;
 import com.gogreen.models.base.entity.BaseEntity;
 import jakarta.persistence.*;
