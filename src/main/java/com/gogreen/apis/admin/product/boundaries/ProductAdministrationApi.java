@@ -35,9 +35,11 @@ public class ProductAdministrationApi {
 	@PostMapping("/product")
 	@PreAuthorize("hasAuthority('product_create')")
 	ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto,
+			@RequestParam(required = false) Long vendorId,
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
 		return ResponseEntity.ok(
-				this.productAdministrationService.createProduct(productDto, userDetails));
+				this.productAdministrationService.createProduct(productDto, vendorId,
+						userDetails));
 	}
 }

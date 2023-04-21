@@ -39,16 +39,23 @@ public class ProductAdministrationService {
 		return this.productService.searchProducts(productSearchDto, pageable);
 	}
 
-	public ProductDto createProduct(ProductDto productDto, UserDetailsImpl userDetails) {
-
-		VendorUserEntity vendorUserEntity = this.vendorUserRepository.findByIdAndDeletedFalseAndEnabledTrue(
-				userDetails.getUserDetailsId()).orElseThrow(
-				() -> new SystemException(HttpStatus.FORBIDDEN, "user not found"));
+	public ProductDto createProduct(ProductDto productDto, Long vendorId,
+			UserDetailsImpl userDetails) {
+		if (userDetails.getUserType().equals(UserTypeEnum.VENDOR)) {
+			VendorUserEntity vendorUserEntity = this.vendorUserRepository.findByIdAndDeletedFalseAndEnabledTrue(
+					userDetails.getUserDetailsId()).orElseThrow(
+					() -> new SystemException(HttpStatus.FORBIDDEN, "user not found"));
+			vendorId = vendorUserEntity.getVendorId();
+		}
+		if (vendorId == null) {
+			throw new SystemException(HttpStatus.BAD_REQUEST,
+					"Vendor Id must be provided");
+		}
 
 		ProductEntity productEntity = this.productMapper.toEntity(productDto);
-		VendorEntity vendor = this.vendorRepository.findByIdAndDeletedFalse(
-				vendorUserEntity.getVendorId()).orElseThrow(
-				() -> new SystemException(HttpStatus.FORBIDDEN, "vendor is inActive"));
+		VendorEntity vendor = this.vendorRepository.findByIdAndDeletedFalse(vendorId)
+				.orElseThrow(() -> new SystemException(HttpStatus.FORBIDDEN,
+						"vendor is inActive"));
 		productEntity.setVendor(vendor);
 		productEntity = this.productRepository.saveAndFlush(productEntity);
 		Set<ProductEntity> productEntities = vendor.getProducts();
