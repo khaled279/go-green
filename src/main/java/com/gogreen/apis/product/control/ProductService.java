@@ -29,7 +29,8 @@ public class ProductService {
 						null :
 						"%" + productSearchDto.getProductName() + "%",
 				productSearchDto.getMaximumPrice(), productSearchDto.getMinimumPrice(),
-				productSearchDto.getProductCategoryIds(), pageable);
+				productSearchDto.getProductCategoryIds(), productSearchDto.getVendorId(),
+				pageable);
 
 		List<ProductDto> productDtos = productMapper.toDtoList(
 				productEntities.getContent());

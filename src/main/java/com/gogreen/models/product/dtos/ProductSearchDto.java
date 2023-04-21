@@ -19,4 +19,6 @@ public class ProductSearchDto {
 
 	private BigDecimal minimumPrice;
 
+	private Long vendorId;
+
 }
